@@ -30,7 +30,7 @@ d3.json('text.json')
 
         const y = d3.scaleLinear()
                     .domain([0,d3.max(data, d => d.height)])
-                    .range([0,250]);
+                    .range([graphHeight, 0]);
                     
         //console.log(y(0));
         //console.log(y(250));
@@ -51,9 +51,10 @@ d3.json('text.json')
         rect.data(data)
             .enter().append("rect")
             .attr("width",  x.bandwidth)
-            .attr("height", (d, i) => y(d.height))
+            .attr("height", (d, i) => graphHeight - y(d.height))
             .attr("fill", (d) => d.fill)
             .attr("x", (d,i) => x(d.fill))
+            .attr("y", d => y(d.height))
 
 
         const xAxis = d3.axisBottom(x);
